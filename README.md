@@ -58,7 +58,7 @@
         <p>Prête à te lancer dans une aventure ? Ce jeu est rempli d’énigmes et de surprises, conçu spécialement pour toi. Chaque étape te rapprochera un peu plus d’un petit trésor caché…</p>
         <p><strong>Indice n°1 :</strong> Regarde attentivement cette page, parfois les réponses se cachent juste devant toi…</p>
         <p>Quand tu es prête, clique ci-dessous pour commencer :</p>
-        <a href="etape1.html" class="button">Commencer l’aventure</a>
+        <a href="etape1.md" class="button">Commencer l’aventure</a>
     </div>
 
     <footer>
