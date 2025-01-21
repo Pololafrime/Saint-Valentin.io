@@ -57,7 +57,7 @@
         <h2>Bienvenue, mon amoureuse ❤️</h2>
         <p>Prête à te lancer dans une aventure ? Ce jeu est rempli d’énigmes et de surprises, conçu spécialement pour toi. Chaque étape te rappelera notre histoire…</p>
         <p>Quand tu es prête, clique ci-dessous pour commencer :</p>
-        <a href="etape1.html" class="button">Commencer l’aventure</a>
+        <a href="hub.html" class="button">Commencer l’aventure</a>
     </div>
 
     <footer>
