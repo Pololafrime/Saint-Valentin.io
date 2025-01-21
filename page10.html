@@ -3,53 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octobre 2023</title>
+    <title>Texte Caché au Survol</title>
     <style>
         body {
-            background-color: #ffe6e6; /* Couleur de fond bleue */
+            background-color: #3498db; /* Couleur de fond bleue */
             margin: 0;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .image-container {
             position: relative;
-            width: 200px;
-            height: 200px;
-            background-color: #ffe6e6; /* Même couleur que le fond */
         }
 
-         h1 {
-            font-size: 1.2em; /* Réduit la taille du titre */
-            margin-bottom: 15px;
-        }
-            
-        .formula {
-            font-size: 1em; /* Réduit la taille de la formule */
-            line-height: 1.4;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .image-container::before {
-            content: "M";
+        .hidden-text {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             font-size: 100px;
-            color: #ffe6e6; /* Couleur du texte, identique au fond */
             font-family: Arial, sans-serif;
+            color: #3498db; /* Couleur du texte identique à celle du fond (caché) */
+            transition: color 0.3s ease;
+        }
+
+        .hidden-text:hover {
+            color: white; /* Couleur du texte visible au survol */
         }
     </style>
 </head>
 <body>
-<h1>Encore vide ?</h1>
 
+<div class="hidden-text" style="top: 30%; left: 50%;">M</div>
 
-<div class="image-container"></div>
+<script>
+    // Générer une position aléatoire pour la lettre
+    const letter = document.querySelector('.hidden-text');
+    const randomTop = Math.random() * 80 + 10; // Position entre 10% et 90% de la hauteur
+    const randomLeft = Math.random() * 80 + 10; // Position entre 10% et 90% de la largeur
+
+    letter.style.top = `${randomTop}%`;
+    letter.style.left = `${randomLeft}%`;
+</script>
 
 </body>
 </html>
