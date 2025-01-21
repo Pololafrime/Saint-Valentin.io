@@ -3,29 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Février 2024</title>
+    <title>Jeu Snake</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #ffe6e6;
+            margin: 0;
+            padding: 0;
         }
         canvas {
-            background-color: #000;
+            background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
             display: block;
             margin: 0 auto;
+            border: 5px solid #fff;
         }
         #message {
             font-size: 24px;
             color: green;
             display: none;
         }
+        /* Ajout d'une image de fond */
+        body {
+            background-image: url('https://example.com/your-background-image.jpg'); /* Remplacez par l'URL de votre image */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
     <h1>Jeu Snake</h1>
     <canvas id="snakeGame" width="400" height="400"></canvas>
-    <p id="message">Félicitations, vous avez gagné ! le message est : y</p>
+    <p id="message">Félicitations, vous avez gagné !</p>
+
+    <!-- Musique de fond -->
+    <audio id="gameMusic" loop>
+        <source src="https://example.com/your-music-file.mp3" type="audio/mp3"> <!-- Remplacez par l'URL de votre fichier audio -->
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+
     <script>
         const canvas = document.getElementById('snakeGame');
         const ctx = canvas.getContext('2d');
@@ -39,6 +59,10 @@
         let score = 0;
         let gameOver = false;
 
+        // Démarrer la musique de fond
+        const gameMusic = document.getElementById('gameMusic');
+        gameMusic.play();
+
         function draw() {
             ctx.clearRect(0, 0, canvasSize, canvasSize);
             drawSnake();
@@ -48,6 +72,7 @@
             if (score >= winLength) {
                 document.getElementById('message').style.display = 'block';
                 gameOver = true;
+                gameMusic.pause();  // Arrêter la musique quand le joueur gagne
             }
             if (!gameOver) {
                 setTimeout(draw, 100);
