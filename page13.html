@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mots autour de l'image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #ffe6e6;  /* Fond de couleur unie */
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .word {
+            position: absolute;
+            font-size: 20px;
+            color: #333;  /* Couleur des mots */
+            font-weight: bold;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .word:hover {
+            transform: rotate(360deg);
+        }
+
+        .center-image {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        const words = [
+            "EXAMEN", "AXE", "TEXTE", "FIXE", "EXTRA", "MAXIMUM", "MIXTE", "EXCEPTION", "EXPLOSION", "RELAX",
+            "EXAMINER", "TAXE", "MIXER", "EXCLUSIF", "COMPLEXITÉ", "MAXIMISER", "EXERCICE", "EXAMINABLE", "FLEXIBLE", "EXTÉRIEUR",
+            "EXAMINÉ", "EXPLICITE", "TEXTURE", "EXPÉRIENCE", "EXALTATION", "EXEMPLE", "FIXATION", "EXERCER", "EXCEPTIONNEL", "DÉTEXTER",
+            "AXIAL", "EXTREMISME", "RELEX", "XENOPHOBIE", "EXUDAT", "RELAXATION", "EXCAVATION", "EXPÉDITION", "MAXIMUMS", "COEXISTER",
+            "EXTRAIT", "EXTERMINER", "EXCITER", "EXCLUSION", "EXPULSER", "EXIGER", "TEXTO", "EXUBÉRANT", "EXORCISME", "FIXER",
+            "EXPRIMER", "EXAMINANT", "EXHALER", "EXIL", "EXTRAVAGANT", "EXCEPTIONNELLE", "EXPO", "EXTASE", "EXIGER", "EXHUMER",
+            "EXOTIQUE", "EXCLUSION", "EXTRÊME", "EXPLOIT", "EXPANSION", "EXONÉRATION", "MAXIMAL", "EXIGENCE", "EXCÈS", "FIXATIF",
+            "EXPÉRIMENTAL", "EXHALATION", "AXIS", "EXCLURE", "EXCENTRIQUE", "EXPLOSIF", "EXUBERANCE", "EXTRAVAGANCE", "AXONAL", "EXÉCUTION",
+            "EXPLORATION", "EXAMINABLE", "REEXAMINER", "EXCEPTIONNELLEMENT", "EXCITATION", "TAXER", "EXIGER", "EXPLOITATION", "EXTRAVERTI",
+            "FIXATIVEMENT", "EXÉCUTIF", "EXIGENCE", "FIXATION", "EXIGIBILITÉ", "EXAMINABLE", "EXPLICIT", "EXUDER", "EXHALE", "EXTENSION",
+            "EXFOLIER"
+        ];
+
+        const container = document.body;
+
+        // Fonction pour générer des positions aléatoires et afficher les mots
+        function placeWords() {
+            words.forEach(word => {
+                const wordElement = document.createElement('div');
+                wordElement.textContent = word;
+                wordElement.classList.add('word');
+
+                // Position aléatoire autour de l'image centrale
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                const radius = 200; // Rayon autour du centre où les mots seront placés
+
+                // Calculer une position aléatoire autour du cercle
+                const angle = Math.random() * 2 * Math.PI;
+                const x = centerX + radius * Math.cos(angle) - 50;  // -50 pour centrer le mot
+                const y = centerY + radius * Math.sin(angle) - 10;  // -10 pour centrer verticalement le mot
+
+                wordElement.style.left = `${x}px`;
+                wordElement.style.top = `${y}px`;
+
+                container.appendChild(wordElement);
+            });
+        }
+
+        // Afficher l'image au centre de la page
+        const imgElement = document.createElement('img');
+        imgElement.src = 'image13.jpg'; // Image centrale
+        imgElement.classList.add('center-image');
+        container.appendChild(imgElement);
+
+        // Appel des fonctions pour afficher les mots autour de l'image
+        placeWords();
+    </script>
+
+</body>
+</html>
+
