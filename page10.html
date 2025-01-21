@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octobre 2023</title>
+    <style>
+        body {
+            background-color: #ffe6e6; /* Couleur de fond bleue */
+            margin: 0;
+            height: 100vh;
+            position: relative;
+        }
+
+        .hidden-text {
+            position: absolute;
+            font-size: 100px;
+            font-family: Arial, sans-serif;
+            color: #ffe6e6; /* Couleur du texte identique à celle du fond (caché) */
+            transition: color 0.3s ease;
+        }
+
+        .hidden-text:hover {
+            color: black; /* Couleur du texte visible au survol */
+        }
+    </style>
+</head>
+<body>
+
+<div class="hidden-text" style="top: 30%; left: 50%;">M</div>
+
+<script>
+    // Générer une position aléatoire pour la lettre
+    const letter = document.querySelector('.hidden-text');
+    const randomTop = Math.random() * 80 + 10; // Position entre 10% et 90% de la hauteur
+    const randomLeft = Math.random() * 80 + 10; // Position entre 10% et 90% de la largeur
+
+    letter.style.top = `${randomTop}%`;
+    letter.style.left = `${randomLeft}%`;
+</script>
+
+</body>
+</html>
