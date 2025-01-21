@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page protégée</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6e6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        input[type="password"], textarea {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #cc5050;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        img {
+            width: 200px; /* Ajustez la taille de l'image selon vos besoins */
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Là où tout a commencé</h2>
+        
+        <!-- Ajout de l'image -->
+        <img src="votre-image.jpg" alt="Description de l'image">
+
+        <!-- Zone de texte -->
+        <textarea rows="8" placeholder="Voici une charade complexe pour le mot "pouet" :
+
+Mon premier est une note de musique, mais elle est muette.
+
+Mon second est une unité de poids souvent utilisée pour les pierres précieuses.
+
+Mon troisième est un pronom possessif à la première personne du pluriel.
+
+Mon quatrième est la dernière lettre de l’alphabet.
+
+Mon tout est moi (n'utilise que les premières lettre des 4 mots"></textarea>
+
+        <!-- Champ pour le mot de passe -->
+        <form id="passwordForm">
+            <input type="password" id="password" placeholder="Mot de passe" required>
+            <br>
+            <button type="submit">Entrer</button>
+            <p id="errorMessage" class="error" style="display: none;">Mot de passe incorrect</p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const correctPassword = 'pouet'; // Remplacez par le mot de passe désiré
+
+            if (password === correctPassword) {
+                window.location.href = 'page3bis.html'; // Redirige vers une page protégée
+            } else {
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
 
