@@ -56,10 +56,17 @@
 
         const container = document.body;
 
+        const imgElement = document.createElement('img');
+        imgElement.src = 'image13.jpg'; // Image centrale
+        imgElement.classList.add('center-image');
+        container.appendChild(imgElement);
+
+        const imgRect = imgElement.getBoundingClientRect(); // Récupérer les coordonnées et la taille de l'image
+
+        const positions = []; // Pour vérifier les collisions
+
         // Fonction pour générer des positions aléatoires et afficher les mots
         function placeWords() {
-            const positions = []; // Pour vérifier les collisions
-
             words.forEach(word => {
                 const wordElement = document.createElement('div');
                 wordElement.textContent = word;
@@ -72,12 +79,18 @@
                 // Position aléatoire des mots
                 let x, y;
 
-                // Trouver une position sans chevauchement
+                // Trouver une position sans chevauchement avec les autres mots ni avec l'image
                 let overlap = true;
                 while (overlap) {
                     overlap = false;
                     x = Math.random() * (window.innerWidth - fontSize); // Assurer que le mot ne dépasse pas à droite
                     y = Math.random() * (window.innerHeight - fontSize); // Assurer que le mot ne dépasse pas en bas
+
+                    // Vérifier si le mot chevauche l'image
+                    if (x < imgRect.right && x + fontSize > imgRect.left && y < imgRect.bottom && y + fontSize > imgRect.top) {
+                        overlap = true;
+                        continue;
+                    }
 
                     // Vérifier si le mot chevauche d'autres mots
                     for (let i = 0; i < positions.length; i++) {
@@ -100,13 +113,7 @@
             });
         }
 
-        // Afficher l'image au centre de la page
-        const imgElement = document.createElement('img');
-        imgElement.src = 'image13.jpg'; // Image centrale
-        imgElement.classList.add('center-image');
-        container.appendChild(imgElement);
-
-        // Appel des fonctions pour afficher les mots autour de l'image
+        // Appel de la fonction pour afficher les mots autour de l'image
         placeWords();
     </script>
 
