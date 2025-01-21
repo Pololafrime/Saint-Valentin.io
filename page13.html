@@ -17,10 +17,8 @@
 
         .word {
             position: absolute;
-            font-size: 20px;
             color: #333;  /* Couleur des mots */
             font-weight: bold;
-            transform: rotate(0deg);
             transition: transform 0.3s ease-in-out;
         }
 
@@ -60,20 +58,40 @@
 
         // Fonction pour générer des positions aléatoires et afficher les mots
         function placeWords() {
+            const positions = []; // Pour vérifier les collisions
+
             words.forEach(word => {
                 const wordElement = document.createElement('div');
                 wordElement.textContent = word;
                 wordElement.classList.add('word');
 
-                // Position aléatoire autour de l'image centrale
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                const radius = 200; // Rayon autour du centre où les mots seront placés
+                // Taille aléatoire des mots (entre 15px et 40px)
+                const fontSize = Math.floor(Math.random() * 26) + 15; // Entre 15px et 40px
+                wordElement.style.fontSize = `${fontSize}px`;
 
-                // Calculer une position aléatoire autour du cercle
-                const angle = Math.random() * 2 * Math.PI;
-                const x = centerX + radius * Math.cos(angle) - 50;  // -50 pour centrer le mot
-                const y = centerY + radius * Math.sin(angle) - 10;  // -10 pour centrer verticalement le mot
+                // Position aléatoire des mots
+                let x, y;
+
+                // Trouver une position sans chevauchement
+                let overlap = true;
+                while (overlap) {
+                    overlap = false;
+                    x = Math.random() * (window.innerWidth - fontSize); // Assurer que le mot ne dépasse pas à droite
+                    y = Math.random() * (window.innerHeight - fontSize); // Assurer que le mot ne dépasse pas en bas
+
+                    // Vérifier si le mot chevauche d'autres mots
+                    for (let i = 0; i < positions.length; i++) {
+                        const pos = positions[i];
+                        const distance = Math.sqrt(Math.pow(x - pos.x, 2) + Math.pow(y - pos.y, 2));
+                        if (distance < 50) { // Si la distance entre les mots est trop petite (50px)
+                            overlap = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Sauvegarder la position actuelle
+                positions.push({ x, y });
 
                 wordElement.style.left = `${x}px`;
                 wordElement.style.top = `${y}px`;
