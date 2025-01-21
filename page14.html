@@ -25,7 +25,7 @@
         }
         /* Ajout d'une image de fond */
         body {
-            background-image: url('https://example.com/your-background-image.jpg'); /* Remplacez par l'URL de votre image */
+            background-image: url('background.jpg'); /* Remplacez par votre image locale */
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -42,7 +42,7 @@
 
     <!-- Musique de fond -->
     <audio id="gameMusic" loop>
-        <source src="https://example.com/your-music-file.mp3" type="audio/mp3"> <!-- Remplacez par l'URL de votre fichier audio -->
+        <source src="tetedeserpent.mp3" type="audio/mp3"> <!-- Remplacez par votre fichier audio local -->
         Votre navigateur ne supporte pas l'audio.
     </audio>
 
@@ -52,16 +52,31 @@
         const gridSize = 20;
         const canvasSize = 400;
         const winLength = 10; // Nombre de cases pour gagner
-        let snake = [{x: 80, y: 80}];
-        let food = generateFood();
-        let direction = 'RIGHT';
-        let newDirection = 'RIGHT';
-        let score = 0;
-        let gameOver = false;
+        let snake;
+        let food;
+        let direction;
+        let newDirection;
+        let score;
+        let gameOver;
+        const snakeHeadImg = new Image();
+        snakeHeadImg.src = 'tetedeserpent.jpg'; // Remplacez par votre image locale de la tête du serpent
 
-        // Démarrer la musique de fond
-        const gameMusic = document.getElementById('gameMusic');
-        gameMusic.play();
+        function startGame() {
+            // Réinitialisation du jeu
+            snake = [{x: 80, y: 80}];
+            food = generateFood();
+            direction = 'RIGHT';
+            newDirection = 'RIGHT';
+            score = 0;
+            gameOver = false;
+            document.getElementById('message').style.display = 'none';
+
+            // Redémarrer la musique
+            gameMusic.currentTime = 0;  // Remettre à zéro le temps de lecture de la musique
+            gameMusic.play();  // Lancer la musique
+
+            draw();
+        }
 
         function draw() {
             ctx.clearRect(0, 0, canvasSize, canvasSize);
@@ -81,8 +96,13 @@
 
         function drawSnake() {
             snake.forEach((segment, index) => {
-                ctx.fillStyle = index === 0 ? 'green' : 'lime'; // Tête en vert, corps en lime
-                ctx.fillRect(segment.x, segment.y, gridSize, gridSize);
+                if (index === 0) {
+                    // Utiliser l'image pour la tête
+                    ctx.drawImage(snakeHeadImg, segment.x, segment.y, gridSize, gridSize);
+                } else {
+                    ctx.fillStyle = 'lime'; // Corps en lime
+                    ctx.fillRect(segment.x, segment.y, gridSize, gridSize);
+                }
             });
         }
 
@@ -132,6 +152,10 @@
                     gameOver = true;
                 }
             }
+
+            if (gameOver) {
+                setTimeout(startGame, 1000); // Redémarrer le jeu après 1 seconde
+            }
         }
 
         document.addEventListener('keydown', (e) => {
@@ -141,7 +165,9 @@
             if (e.key === 'ArrowRight' && direction !== 'LEFT') newDirection = 'RIGHT';
         });
 
-        draw();
+        // Démarrer le jeu dès que la page se charge
+        snakeHeadImg.onload = startGame;
     </script>
 </body>
 </html>
+
