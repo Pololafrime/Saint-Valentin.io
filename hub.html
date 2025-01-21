@@ -22,7 +22,7 @@
             font-size: 2.5em;
         }
         .container {
-            max-width: 1000px;
+            max-width: 600px;
             margin: 20px auto;
             padding: 20px;
             background: white;
@@ -31,39 +31,26 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr; /* Deux colonnes égales */
+            gap: 10px;
             margin: 20px 0;
         }
         .grid label {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: start;
+            gap: 10px;
         }
         .grid input[type="checkbox"] {
-            margin-right: 10px;
             width: 20px;
             height: 20px;
-        }
-        .grid a {
-            display: block;
-            padding: 10px;
-            background-color: #ff6666;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-        .grid a:hover {
-            background-color: #cc5050;
         }
         .message {
             display: none;
             margin-top: 20px;
             font-size: 1.2em;
             color: green;
+            font-weight: bold;
         }
         footer {
             margin-top: 20px;
@@ -78,99 +65,37 @@
     </header>
 
     <div class="container">
-        <h2>Choisissez une page : </h2>
+        <h2>Cochez toutes les cases :</h2>
         <div class="grid">
-            <label>
-                <input type="checkbox" class="checkbox">
-                <a href="page1.html">Janvier 2023</a>
-            </label>
-            <label>
-                <input type="checkbox" class="checkbox">
-                <a href="page2.html">Février 2023</a>
-            </label>
-            <label>
-                <input type="checkbox" class="checkbox">
-                <a href="page3.html">Mars 2023</a>
-            </label>
-            <label>
-                <input type="checkbox" class="checkbox">
-                <a href="page4.html">Avril 2023</a>
-            </label>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page7.html">Juillet 2023</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page8.html">Août 2023</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page9.html">Septembre 2023</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page10.html">Octobre 2023</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page11.html">Novembre 2023</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page12.html">Décembre 2023</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page13.html">Janvier 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page14.html">Février 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page15.html">Mars 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page16.html">Avril 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page17.html">Mai 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page18.html">Juin 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page19.html">Juillet 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page20.html">Août 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page21.html">Septembre 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page22.html">Octobre 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page23.html">Novembre 2024</a>
-            </label>
-            <label>
-                <input type="checkbox">
-                <a href="page24.html">Décembre 2024</a>
-            </label>
+            <!-- Génération des mois pour 2023 -->
+            <label><input type="checkbox" class="checkbox"> Janvier 2023</label>
+            <label><input type="checkbox" class="checkbox"> Février 2023</label>
+            <label><input type="checkbox" class="checkbox"> Mars 2023</label>
+            <label><input type="checkbox" class="checkbox"> Avril 2023</label>
+            <label><input type="checkbox" class="checkbox"> Mai 2023</label>
+            <label><input type="checkbox" class="checkbox"> Juin 2023</label>
+            <label><input type="checkbox" class="checkbox"> Juillet 2023</label>
+            <label><input type="checkbox" class="checkbox"> Août 2023</label>
+            <label><input type="checkbox" class="checkbox"> Septembre 2023</label>
+            <label><input type="checkbox" class="checkbox"> Octobre 2023</label>
+            <label><input type="checkbox" class="checkbox"> Novembre 2023</label>
+            <label><input type="checkbox" class="checkbox"> Décembre 2023</label>
+
+            <!-- Génération des mois pour 2024 -->
+            <label><input type="checkbox" class="checkbox"> Janvier 2024</label>
+            <label><input type="checkbox" class="checkbox"> Février 2024</label>
+            <label><input type="checkbox" class="checkbox"> Mars 2024</label>
+            <label><input type="checkbox" class="checkbox"> Avril 2024</label>
+            <label><input type="checkbox" class="checkbox"> Mai 2024</label>
+            <label><input type="checkbox" class="checkbox"> Juin 2024</label>
+            <label><input type="checkbox" class="checkbox"> Juillet 2024</label>
+            <label><input type="checkbox" class="checkbox"> Août 2024</label>
+            <label><input type="checkbox" class="checkbox"> Septembre 2024</label>
+            <label><input type="checkbox" class="checkbox"> Octobre 2024</label>
+            <label><input type="checkbox" class="checkbox"> Novembre 2024</label>
+            <label><input type="checkbox" class="checkbox"> Décembre 2024</label>
         </div>
-        <p class="message">Bravo ! Utilise tou ce que tu as obtenu pour fabriquer un url !</p>
+        <p class="message">Bravo, vous avez tout coché !</p>
     </div>
 
     <footer>
@@ -184,7 +109,7 @@
             const message = document.querySelector('.message');
             const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
 
-            // Affiche le message si toutes les cases sont cochées
+            // Affiche ou cache le message
             message.style.display = allChecked ? 'block' : 'none';
         }
 
