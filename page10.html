@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image et Texte de Couleur Identique</title>
+    <style>
+        body {
+            background-color: #3498db; /* Couleur de fond bleue */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background-color: #3498db; /* Même couleur que le fond */
+        }
+
+        .image-container::before {
+            content: "M";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            color: #3498db; /* Couleur du texte, identique au fond */
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<div class="image-container"></div>
+
+</body>
+</html>
