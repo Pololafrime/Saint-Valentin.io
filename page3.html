@@ -15,22 +15,22 @@
         }
         .container {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
+            margin: 40px auto; /* Augmenter l'espace autour du conteneur */
+            padding: 30px; /* Augmenter l'espace interne */
             background: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
         }
         input[type="password"], textarea {
-            padding: 10px;
+            padding: 15px; /* Augmenter l'espace interne */
             width: 100%;
-            max-width: 300px;
-            margin: 20px 0;
+            max-width: 350px; /* Augmenter la largeur max */
+            margin: 30px 0; /* Augmenter la marge entre les éléments */
             border: 1px solid #ccc;
             border-radius: 4px;
         }
         button {
-            padding: 10px 20px;
+            padding: 12px 25px; /* Augmenter l'espace interne du bouton */
             background-color: #ff6666;
             color: white;
             border: none;
@@ -43,13 +43,17 @@
         }
         .error {
             color: red;
-            margin-top: 10px;
+            margin-top: 20px; /* Augmenter la marge pour espacer le message d'erreur */
         }
         img {
-            width: 200px; /* Ajustez la taille de l'image selon vos besoins */
+            width: 250px; /* Ajustez la taille de l'image selon vos besoins */
             height: auto;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 40px; /* Augmenter l'espace sous l'image */
+        }
+        h2 {
+            line-height: 1.6; /* Augmenter l'interligne pour plus d'espace entre les lignes */
+            margin-bottom: 20px; /* Ajouter un espacement après le titre */
         }
     </style>
 </head>
@@ -61,16 +65,11 @@
         <img src="votre-image.jpg" alt="Description de l'image">
 
         <!-- Zone de texte -->
-         <h2>Mon premier est une note de musique, mais elle est muette.
-
-Mon second est une unité de poids souvent utilisée pour les pierres précieuses.
-
-Mon troisième est un pronom possessif à la première personne du pluriel.
-
-Mon quatrième est la dernière lettre de l’alphabet.
-
-Mon tout est moi (n'utilise que les premières lettre des 4 mots" :<h2>
-</textarea>
+        <h2>Mon premier est une note de musique, mais elle est muette.</h2>
+        <h2>Mon second est une unité de poids souvent utilisée pour les pierres précieuses.</h2>
+        <h2>Mon troisième est un pronom possessif à la première personne du pluriel.</h2>
+        <h2>Mon quatrième est la dernière lettre de l’alphabet.</h2>
+        <h2>Mon tout est moi (n'utilise que les premières lettre des 4 mots).</h2>
 
         <!-- Champ pour le mot de passe -->
         <form id="passwordForm">
@@ -97,4 +96,5 @@ Mon tout est moi (n'utilise que les premières lettre des 4 mots" :<h2>
     </script>
 </body>
 </html>
+
 
