@@ -5,7 +5,7 @@
     <title>Jeu de Piste - Saint-Valentin</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Be my Glitterine, sans-serif;
             background-color: #ffe6e6;
             color: #333;
             margin: 0;
