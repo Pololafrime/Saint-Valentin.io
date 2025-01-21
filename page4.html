@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formule Mathématique</title>
+    <title>Formule Mathématique avec MathJax</title>
+    <!-- Chargement de MathJax -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,9 +46,13 @@
     <div class="container">
         <h1>Formule Mathématique Complexe :</h1>
         <div class="formula">
-            \(\frac{\int_0^\infty \left( e^{\frac{x^2}{2}} \cdot \cos\left( \frac{x}{\pi} \right) \right) \, dx + \sum_{n=1}^{\infty} \frac{(-1)^n}{n^2}}{\left( \sqrt{\Gamma\left( \frac{3}{2} \right)} \cdot \log\left( 2 \right) \right)^{\frac{1}{3}}} - \lim_{x \to 0} \frac{\sin(x)}{x} = 3\)
+            <!-- La formule en LaTeX -->
+            \[
+            \frac{\int_0^\infty \left( e^{\frac{x^2}{2}} \cdot \cos\left( \frac{x}{\pi} \right) \right) \, dx + \sum_{n=1}^{\infty} \frac{(-1)^n}{n^2}}{\left( \sqrt{\Gamma\left( \frac{3}{2} \right)} \cdot \log\left( 2 \right) \right)^{\frac{1}{3}}} - \lim_{x \to 0} \frac{\sin(x)}{x} = 3
+            \]
         </div>
     </div>
 
 </body>
 </html>
+
