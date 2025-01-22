@@ -83,11 +83,12 @@
             return maze;
         }
 
+        // Initialiser le labyrinthe
+        let maze = createMaze();
+
         // Afficher le labyrinthe
         function renderMaze() {
-            mazeElement.innerHTML = '';
-            const maze = createMaze(); // Crée le labyrinthe une seule fois
-
+            mazeElement.innerHTML = ''; // Réinitialiser la grille avant de la remplir
             maze.forEach(row => {
                 row.forEach(cell => {
                     const cellDiv = document.createElement('div');
@@ -104,17 +105,29 @@
             });
         }
 
+        // Mettre à jour la position du joueur dans la grille
+        function updatePlayerPosition() {
+            maze.forEach(row => {
+                row.forEach(cell => {
+                    if (cell.x === playerPosition.x && cell.y === playerPosition.y) {
+                        cell.type = 'player'; // Met à jour la position du joueur
+                    } else if (cell.type === 'player') {
+                        cell.type = 'empty'; // Vide la cellule précédente du joueur
+                    }
+                });
+            });
+            renderMaze(); // Rendre de nouveau la grille avec la position mise à jour
+        }
+
         // Déplacer le joueur
         function movePlayer(dx, dy) {
             const newX = playerPosition.x + dx;
             const newY = playerPosition.y + dy;
 
             if (newX >= 0 && newY >= 0 && newX < mazeSize && newY < mazeSize) {
-                const maze = createMaze(); // Crée une copie fixe du labyrinthe
                 if (maze[newY][newX].type !== 'wall') {
                     playerPosition = { x: newX, y: newY };
-                    renderMaze(); // Rendre le labyrinthe avec la nouvelle position du joueur
-                    
+                    updatePlayerPosition(); // Mettre à jour uniquement la position du joueur
                     if (playerPosition.x === exitPosition.x && playerPosition.y === exitPosition.y) {
                         alert("4");
                     }
@@ -140,11 +153,12 @@
             }
         });
 
-        renderMaze(); // Rendre initialement le labyrinthe
+        renderMaze(); // Afficher le labyrinthe au début
     </script>
 
 </body>
 </html>
+
 
 
 
