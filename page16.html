@@ -85,6 +85,12 @@
             gameGrid.innerHTML = '';
         }
 
+        // Afficher un message de fin de jeu
+        function showFinalMessage(message) {
+            document.getElementById("message").textContent = message;
+            document.querySelector("button").disabled = true;  // Désactiver le bouton
+        }
+
         // Évaluer une tentative
         function evaluateGuess() {
             const tiles = document.querySelectorAll(".tile");
@@ -132,8 +138,7 @@
                     document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
                     document.getElementById("message").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
                 } else {
-                    document.getElementById("message").textContent = "Félicitations ! Vous avez trouvé tous les mots !";
-                    document.querySelector("button").disabled = true;  // Désactive le bouton
+                    showFinalMessage("Félicitations ! Vous avez trouvé tous les mots !");
                 }
             } else if (attempts >= maxAttempts) {
                 document.getElementById("message").textContent = `Perdu ! Le mot était : ${secretWord}`;
@@ -145,8 +150,7 @@
                     createTiles();
                     document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
                 } else {
-                    document.getElementById("message").textContent = "Félicitations ! Vous avez trouvé tous les mots !";
-                    document.querySelector("button").disabled = true;  // Désactive le bouton
+                    showFinalMessage("Félicitations ! Vous avez trouvé tous les mots !");
                 }
             }
         }
@@ -155,11 +159,13 @@
             evaluateGuess();
         }
 
+        // Initialisation
         createTiles();
         document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
     </script>
 </body>
 </html>
+
 
 
 
