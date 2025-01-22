@@ -38,7 +38,9 @@
         }
         .player {
             background-color: #ff5733;
-            transition: transform 0.1s ease; /* Transition pour un mouvement fluide */
+            position: absolute; /* Position absolue pour déplacer le joueur */
+            width: 5px;
+            height: 5px;
         }
         .exit {
             background-color: #28a745;
@@ -103,16 +105,19 @@
                 });
             });
 
-            // Créer l'élément du joueur
-            const playerDiv = document.createElement('div');
-            playerDiv.classList.add('player');
-            mazeElement.appendChild(playerDiv);
-            updatePlayerPosition(); // Position initiale du joueur
+            // Créer ou mettre à jour l'élément du joueur
+            let playerDiv = document.querySelector('.player');
+            if (!playerDiv) {
+                playerDiv = document.createElement('div');
+                playerDiv.classList.add('player');
+                mazeElement.appendChild(playerDiv);
+            }
+
+            updatePlayerPosition(playerDiv); // Position initiale du joueur
         }
 
         // Mettre à jour la position du joueur
-        function updatePlayerPosition() {
-            const playerDiv = document.querySelector('.player');
+        function updatePlayerPosition(playerDiv) {
             const playerOffsetX = playerPosition.x * 6; // Décalage de 6px (5px + 1px de bordure)
             const playerOffsetY = playerPosition.y * 6; // Décalage de 6px (5px + 1px de bordure)
             playerDiv.style.transform = `translate(${playerOffsetX}px, ${playerOffsetY}px)`; // Déplacer le joueur avec une transition fluide
@@ -126,7 +131,7 @@
             if (newX >= 0 && newY >= 0 && newX < mazeSize && newY < mazeSize) {
                 if (maze[newY][newX].type !== 'wall') {
                     playerPosition = { x: newX, y: newY };
-                    updatePlayerPosition(); // Mettre à jour uniquement la position du joueur
+                    updatePlayerPosition(document.querySelector('.player')); // Mettre à jour uniquement la position du joueur
                     if (playerPosition.x === exitPosition.x && playerPosition.y === exitPosition.y) {
                         alert("4");
                     }
