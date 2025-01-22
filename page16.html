@@ -7,35 +7,32 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
             text-align: center;
+            margin: 20px;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-            justify-content: center;
+            grid-template-columns: repeat(auto-fit, 40px);
             gap: 10px;
+            justify-content: center;
             margin: 20px auto;
-            width: fit-content;
         }
         .tile {
             width: 40px;
             height: 40px;
             text-align: center;
             line-height: 40px;
-            font-size: 20px;
+            font-size: 18px;
             border: 2px solid #ccc;
             border-radius: 5px;
         }
         .tile.correct {
             background-color: green;
             color: white;
-            border-color: green;
         }
         .tile.misplaced {
             background-color: orange;
             color: white;
-            border-color: orange;
         }
         .tile.empty {
             background-color: #f0f0f0;
@@ -43,95 +40,77 @@
         button {
             padding: 10px 20px;
             font-size: 16px;
-            cursor: pointer;
             margin-top: 20px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Bienvenue dans le jeu Motus !</h1>
+    <h1>Motus</h1>
+    <p id="instructions"></p>
     <div id="game" class="grid"></div>
     <button onclick="submitGuess()">Soumettre</button>
     <p id="message"></p>
 
     <script>
-        async function fetchWords() {
-            const response = await fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt');
-            const text = await response.text();
-            const words = text.split('\n').filter(word => word.length >= 5 && /^[a-zéèêëàâäôöùûüç-]+$/i.test(word));
-            return words;
-        }
-
-        let secretWord = "";
+        const words = ["abeille", "banane", "citron", "docteur", "elephant", "fleur", "giraffe", "horizon", "imagine", "joueurs"];
+        const secretWord = words[Math.floor(Math.random() * words.length)];
         let attempts = 0;
         const maxAttempts = 5;
         const gameGrid = document.getElementById("game");
 
-        function createTiles(wordLength) {
+        function createTiles() {
             gameGrid.innerHTML = "";
-            for (let i = 0; i < wordLength; i++) {
+            for (let i = 0; i < secretWord.length; i++) {
                 const tile = document.createElement("div");
                 tile.className = "tile empty";
-                tile.contentEditable = i === 0 ? "true" : "false";
+                tile.contentEditable = i === 0 ? "false" : "true";
                 tile.dataset.index = i;
-                if (i === 0) tile.textContent = secretWord[0];
+                tile.textContent = i === 0 ? secretWord[0] : "";
                 gameGrid.appendChild(tile);
             }
         }
 
-        fetchWords().then(words => {
-            secretWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
-            createTiles(secretWord.length);
-        });
-
-        function evaluateGuess(secret, guess) {
-            const tiles = document.querySelectorAll(".tile");
-            const secretArray = secret.split("");
-            const guessArray = guess.split("");
-
-            guessArray.forEach((char, index) => {
-                const tile = tiles[index];
-                if (char === secretArray[index]) {
-                    tile.className = "tile correct";
-                } else if (secretArray.includes(char)) {
-                    tile.className = "tile misplaced";
-                } else {
-                    tile.className = "tile";
-                }
-                tile.textContent = char;
-            });
-        }
-
-        function submitGuess() {
+        function evaluateGuess() {
             const tiles = document.querySelectorAll(".tile");
             const guess = Array.from(tiles).map(tile => tile.textContent.toLowerCase()).join("");
-
             if (guess.length !== secretWord.length) {
-                document.getElementById("message").textContent = `Votre mot doit contenir exactement ${secretWord.length} lettres.`;
+                document.getElementById("message").textContent = `Le mot doit contenir ${secretWord.length} lettres.`;
                 return;
             }
 
             attempts++;
-            evaluateGuess(secretWord, guess);
+            let correct = 0;
 
-            if (guess === secretWord) {
+            tiles.forEach((tile, index) => {
+                const char = tile.textContent.toLowerCase();
+                if (char === secretWord[index]) {
+                    tile.className = "tile correct";
+                    correct++;
+                } else if (secretWord.includes(char)) {
+                    tile.className = "tile misplaced";
+                } else {
+                    tile.className = "tile";
+                }
+            });
+
+            if (correct === secretWord.length) {
                 document.getElementById("message").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
                 return;
             }
 
             if (attempts >= maxAttempts) {
-                document.getElementById("message").textContent = `Dommage ! Le mot était : ${secretWord}`;
+                document.getElementById("message").textContent = `Perdu ! Le mot était : ${secretWord}`;
                 setTimeout(() => location.reload(), 3000);
-            } else {
-                Array.from(tiles).forEach((tile, index) => {
-                    tile.contentEditable = "true";
-                    tile.className = "tile empty";
-                    if (index === 0) tile.textContent = secretWord[0];
-                    else tile.textContent = "";
-                });
             }
         }
+
+        function submitGuess() {
+            evaluateGuess();
+        }
+
+        createTiles();
+        document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
     </script>
 </body>
 </html>
-
