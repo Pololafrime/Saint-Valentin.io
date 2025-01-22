@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Labyrinthe Géant</title>
+    <title>Labyrinthe Géant 400x400</title>
     <style>
         body {
             background-color: #ffe6e6;
@@ -18,13 +18,13 @@
         }
         #maze {
             display: grid;
-            grid-template-columns: repeat(80, 10px);
-            grid-template-rows: repeat(80, 10px);
+            grid-template-columns: repeat(400, 5px); /* 400 colonnes */
+            grid-template-rows: repeat(400, 5px); /* 400 lignes */
             gap: 1px;
         }
         .cell {
-            width: 10px;
-            height: 10px;
+            width: 5px;
+            height: 5px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
         }
@@ -44,12 +44,12 @@
     <div id="maze"></div>
 
     <script>
-        const mazeSize = 80; // Augmenter la taille à 80x80
+        const mazeSize = 400; // Taille du labyrinthe 400x400
         const mazeElement = document.getElementById('maze');
         let playerPosition = { x: 1, y: 1 };
-        const exitPosition = { x: 78, y: 78 }; // Modifier la position de la sortie
+        const exitPosition = { x: 398, y: 398 }; // Position de la sortie
 
-        // Créer un labyrinthe avec des murs plus complexes
+        // Créer un labyrinthe avec des murs fixes
         function createMaze() {
             let maze = [];
             for (let y = 0; y < mazeSize; y++) {
@@ -59,7 +59,7 @@
                 }
                 maze.push(row);
             }
-            
+
             // Ajouter des murs de manière aléatoire pour rendre le labyrinthe plus difficile
             for (let y = 0; y < mazeSize; y++) {
                 for (let x = 0; x < mazeSize; x++) {
@@ -68,18 +68,18 @@
                     }
                 }
             }
-            
+
             // S'assurer que la position du joueur et de la sortie sont vides
             maze[exitPosition.y][exitPosition.x].type = 'exit';
             maze[playerPosition.y][playerPosition.x].type = 'player';
-            
+
             return maze;
         }
 
         // Afficher le labyrinthe
         function renderMaze() {
             mazeElement.innerHTML = '';
-            const maze = createMaze();
+            const maze = createMaze(); // Crée le labyrinthe une seule fois
 
             maze.forEach(row => {
                 row.forEach(cell => {
@@ -103,10 +103,10 @@
             const newY = playerPosition.y + dy;
 
             if (newX >= 0 && newY >= 0 && newX < mazeSize && newY < mazeSize) {
-                const maze = createMaze();
+                const maze = createMaze(); // Crée une copie fixe du labyrinthe
                 if (maze[newY][newX].type !== 'wall') {
                     playerPosition = { x: newX, y: newY };
-                    renderMaze();
+                    renderMaze(); // Rendre le labyrinthe avec la nouvelle position du joueur
                     
                     if (playerPosition.x === exitPosition.x && playerPosition.y === exitPosition.y) {
                         alert("4");
@@ -138,4 +138,5 @@
 
 </body>
 </html>
+
 
