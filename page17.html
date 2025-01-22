@@ -16,6 +16,11 @@
             height: 100vh;
             overflow: hidden;
         }
+        #maze-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: auto; /* Permet le défilement */
+        }
         #maze {
             display: grid;
             grid-template-columns: repeat(400, 5px); /* 400 colonnes */
@@ -41,7 +46,9 @@
 </head>
 <body>
 
-    <div id="maze"></div>
+    <div id="maze-container">
+        <div id="maze"></div>
+    </div>
 
     <script>
         const mazeSize = 400; // Taille du labyrinthe 400x400
@@ -138,5 +145,6 @@
 
 </body>
 </html>
+
 
 
