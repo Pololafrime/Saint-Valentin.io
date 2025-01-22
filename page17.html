@@ -17,8 +17,9 @@
             overflow: hidden;
         }
         #maze-container {
-            width: 100vw;
-            height: 100vh;
+            position: relative;
+            width: 90vw;  /* Taille relative de la fenêtre de jeu */
+            height: 90vh; /* Taille relative de la fenêtre de jeu */
             overflow: auto; /* Permet le défilement */
         }
         #maze {
@@ -26,7 +27,6 @@
             grid-template-columns: repeat(400, 5px); /* 400 colonnes */
             grid-template-rows: repeat(400, 5px); /* 400 lignes */
             gap: 1px;
-            position: relative; /* Permet de positionner le joueur en absolu par rapport à la grille */
         }
         .cell {
             width: 5px;
@@ -39,10 +39,9 @@
         }
         .player {
             background-color: #ff5733;
-            position: fixed; /* Positionnement fixe pour que le joueur reste à l'écran */
+            position: absolute; /* Position absolue pour déplacer le joueur */
             width: 5px;
             height: 5px;
-            z-index: 10; /* Placer le joueur au-dessus du labyrinthe */
         }
         .exit {
             background-color: #28a745;
@@ -58,6 +57,7 @@
     <script>
         const mazeSize = 400; // Taille du labyrinthe 400x400
         const mazeElement = document.getElementById('maze');
+        const mazeContainer = document.getElementById('maze-container');
         let playerPosition = { x: 1, y: 1 };
         const exitPosition = { x: 398, y: 398 }; // Position de la sortie
 
@@ -112,7 +112,7 @@
             if (!playerDiv) {
                 playerDiv = document.createElement('div');
                 playerDiv.classList.add('player');
-                document.body.appendChild(playerDiv); // Placer le joueur dans le body, pas dans le maze
+                mazeElement.appendChild(playerDiv);
             }
 
             updatePlayerPosition(playerDiv); // Position initiale du joueur
@@ -122,8 +122,7 @@
         function updatePlayerPosition(playerDiv) {
             const playerOffsetX = playerPosition.x * 6; // Décalage de 6px (5px + 1px de bordure)
             const playerOffsetY = playerPosition.y * 6; // Décalage de 6px (5px + 1px de bordure)
-            playerDiv.style.left = `${playerOffsetX}px`; // Déplacer le joueur
-            playerDiv.style.top = `${playerOffsetY}px`; // Déplacer le joueur
+            playerDiv.style.transform = `translate(${playerOffsetX}px, ${playerOffsetY}px)`; // Déplacer le joueur avec une transition fluide
         }
 
         // Déplacer le joueur
@@ -165,6 +164,7 @@
 
 </body>
 </html>
+
 
 
 
