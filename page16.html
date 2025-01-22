@@ -60,6 +60,11 @@
         const maxAttempts = 5;
         const gameGrid = document.getElementById("game");
 
+        // Fonction pour ignorer les accents
+        function normalizeString(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
         // Créer une nouvelle ligne de cases pour un essai
         function createTiles() {
             const row = document.createElement("div");
@@ -75,9 +80,12 @@
             gameGrid.appendChild(row);
         }
 
+        // Évaluer une tentative
         function evaluateGuess() {
             const tiles = document.querySelectorAll(".tile");
-            const guess = Array.from(tiles).map(tile => tile.textContent.toLowerCase()).join("");
+            const guess = Array.from(tiles).map(tile => normalizeString(tile.textContent)).join("");
+            const normalizedSecretWord = normalizeString(secretWord);
+
             if (guess.length !== secretWord.length) {
                 document.getElementById("message").textContent = `Le mot doit contenir ${secretWord.length} lettres.`;
                 return;
@@ -90,16 +98,16 @@
             const currentRow = document.createElement("div");
             currentRow.className = "grid";
             tiles.forEach((tile, index) => {
-                const char = tile.textContent.toLowerCase();
+                const char = normalizeString(tile.textContent);
                 const newTile = document.createElement("div");
                 newTile.className = "tile empty";
                 newTile.textContent = char;
 
                 // Vérifier si la lettre est correcte
-                if (char === secretWord[index]) {
+                if (char === normalizedSecretWord[index]) {
                     newTile.className = "tile correct";
                     correct++;
-                } else if (secretWord.includes(char)) {
+                } else if (normalizedSecretWord.includes(char)) {
                     newTile.className = "tile misplaced";
                 }
 
@@ -108,16 +116,31 @@
 
             gameGrid.appendChild(currentRow);
 
-            // Si le mot est trouvé, on affiche le message
+            // Si le mot est trouvé, on passe au mot suivant
             if (correct === secretWord.length) {
-                document.getElementById("message").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
+                currentWordIndex++;
+                if (currentWordIndex < words.length) {
+                    secretWord = words[currentWordIndex];
+                    attempts = 0;
+                    createTiles();
+                    document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
+                    document.getElementById("message").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
+                } else {
+                    document.getElementById("message").textContent = "Félicitations ! Vous avez trouvé tous les mots !";
+                    document.querySelector("button").disabled = true;  // Désactive le bouton
+                }
             } else if (attempts >= maxAttempts) {
                 document.getElementById("message").textContent = `Perdu ! Le mot était : ${secretWord}`;
-            }
-
-            // Créer une nouvelle ligne pour un essai suivant si le jeu continue
-            if (correct !== secretWord.length && attempts < maxAttempts) {
-                createTiles();
+                currentWordIndex++;
+                if (currentWordIndex < words.length) {
+                    secretWord = words[currentWordIndex];
+                    attempts = 0;
+                    createTiles();
+                    document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
+                } else {
+                    document.getElementById("message").textContent = "Félicitations ! Vous avez trouvé tous les mots !";
+                    document.querySelector("button").disabled = true;  // Désactive le bouton
+                }
             }
         }
 
@@ -130,4 +153,5 @@
     </script>
 </body>
 </html>
+
 
