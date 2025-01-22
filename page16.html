@@ -12,7 +12,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, 40px);
+            grid-template-columns: repeat(5, 40px); /* Assurer que chaque ligne ait 5 colonnes */
             gap: 10px;
             justify-content: center;
             margin: 20px auto;
@@ -35,7 +35,7 @@
             color: white;
         }
         .tile.empty {
-            background-color: #ffe6e6;
+            background-color: #f0f0f0;
         }
         button {
             padding: 10px 20px;
@@ -60,6 +60,7 @@
         const maxAttempts = 5;
         const gameGrid = document.getElementById("game");
 
+        // Créer une nouvelle ligne de cases pour un essai
         function createTiles() {
             const row = document.createElement("div");
             row.className = "grid";
@@ -84,9 +85,8 @@
 
             attempts++;
             let correct = 0;
-            let newRowCreated = false;
 
-            // On parcourt les cases et on les colore
+            // Créer une nouvelle ligne pour afficher la tentative
             const currentRow = document.createElement("div");
             currentRow.className = "grid";
             tiles.forEach((tile, index) => {
@@ -95,6 +95,7 @@
                 newTile.className = "tile empty";
                 newTile.textContent = char;
 
+                // Vérifier si la lettre est correcte
                 if (char === secretWord[index]) {
                     newTile.className = "tile correct";
                     correct++;
