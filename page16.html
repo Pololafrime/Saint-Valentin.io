@@ -10,30 +10,49 @@
             margin: 20px;
             text-align: center;
         }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 10px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+            justify-content: center;
+            gap: 10px;
+            margin: 20px auto;
+            width: fit-content;
+        }
+        .tile {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .tile.correct {
+            background-color: green;
+            color: white;
+            border-color: green;
+        }
+        .tile.misplaced {
+            background-color: orange;
+            color: white;
+            border-color: orange;
+        }
+        .tile.empty {
+            background-color: #f0f0f0;
         }
         button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-        }
-        .hint {
-            margin: 20px 0;
-            font-size: 18px;
-            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Bienvenue dans le jeu Motus !</h1>
-    <p id="instructions"></p>
-    <input type="text" id="guess" placeholder="Proposez un mot...">
+    <div id="game" class="grid"></div>
     <button onclick="submitGuess()">Soumettre</button>
-    <div class="hint" id="hint"></div>
-    <p id="result"></p>
+    <p id="message"></p>
 
     <script>
         async function fetchWords() {
@@ -46,55 +65,73 @@
         let secretWord = "";
         let attempts = 0;
         const maxAttempts = 5;
+        const gameGrid = document.getElementById("game");
+
+        function createTiles(wordLength) {
+            gameGrid.innerHTML = "";
+            for (let i = 0; i < wordLength; i++) {
+                const tile = document.createElement("div");
+                tile.className = "tile empty";
+                tile.contentEditable = i === 0 ? "true" : "false";
+                tile.dataset.index = i;
+                if (i === 0) tile.textContent = secretWord[0];
+                gameGrid.appendChild(tile);
+            }
+        }
 
         fetchWords().then(words => {
             secretWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
-            document.getElementById("instructions").textContent = `Le mot à deviner contient ${secretWord.length} lettres.`;
+            createTiles(secretWord.length);
         });
 
         function evaluateGuess(secret, guess) {
-            let result = "";
-            for (let i = 0; i < guess.length; i++) {
-                if (i < secret.length && guess[i] === secret[i]) {
-                    result += `[${guess[i]}]`;
-                } else if (secret.includes(guess[i])) {
-                    result += `(${guess[i]})`;
+            const tiles = document.querySelectorAll(".tile");
+            const secretArray = secret.split("");
+            const guessArray = guess.split("");
+
+            guessArray.forEach((char, index) => {
+                const tile = tiles[index];
+                if (char === secretArray[index]) {
+                    tile.className = "tile correct";
+                } else if (secretArray.includes(char)) {
+                    tile.className = "tile misplaced";
                 } else {
-                    result += guess[i];
+                    tile.className = "tile";
                 }
-            }
-            return result;
+                tile.textContent = char;
+            });
         }
 
         function submitGuess() {
-            const guessInput = document.getElementById("guess");
-            const guess = guessInput.value.toLowerCase();
-            guessInput.value = "";
-
-            if (!secretWord) {
-                document.getElementById("hint").textContent = "Chargement du mot en cours... Veuillez patienter.";
-                return;
-            }
+            const tiles = document.querySelectorAll(".tile");
+            const guess = Array.from(tiles).map(tile => tile.textContent.toLowerCase()).join("");
 
             if (guess.length !== secretWord.length) {
-                document.getElementById("hint").textContent = `Votre mot doit contenir exactement ${secretWord.length} lettres.`;
+                document.getElementById("message").textContent = `Votre mot doit contenir exactement ${secretWord.length} lettres.`;
                 return;
             }
 
             attempts++;
+            evaluateGuess(secretWord, guess);
+
             if (guess === secretWord) {
-                document.getElementById("result").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
-                document.getElementById("hint").textContent = "";
+                document.getElementById("message").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
                 return;
             }
 
-            const hint = evaluateGuess(secretWord, guess);
-            document.getElementById("hint").textContent = `Indice : ${hint}`;
-
             if (attempts >= maxAttempts) {
-                document.getElementById("result").textContent = `Dommage ! Le mot était : ${secretWord}`;
+                document.getElementById("message").textContent = `Dommage ! Le mot était : ${secretWord}`;
+                setTimeout(() => location.reload(), 3000);
+            } else {
+                Array.from(tiles).forEach((tile, index) => {
+                    tile.contentEditable = "true";
+                    tile.className = "tile empty";
+                    if (index === 0) tile.textContent = secretWord[0];
+                    else tile.textContent = "";
+                });
             }
         }
     </script>
 </body>
 </html>
+
