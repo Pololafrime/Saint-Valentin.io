@@ -26,6 +26,7 @@
             grid-template-columns: repeat(400, 5px); /* 400 colonnes */
             grid-template-rows: repeat(400, 5px); /* 400 lignes */
             gap: 1px;
+            position: relative; /* Permet de positionner le joueur en absolu par rapport à la grille */
         }
         .cell {
             width: 5px;
@@ -38,9 +39,10 @@
         }
         .player {
             background-color: #ff5733;
-            position: absolute; /* Position absolue pour déplacer le joueur */
+            position: fixed; /* Positionnement fixe pour que le joueur reste à l'écran */
             width: 5px;
             height: 5px;
+            z-index: 10; /* Placer le joueur au-dessus du labyrinthe */
         }
         .exit {
             background-color: #28a745;
@@ -110,7 +112,7 @@
             if (!playerDiv) {
                 playerDiv = document.createElement('div');
                 playerDiv.classList.add('player');
-                mazeElement.appendChild(playerDiv);
+                document.body.appendChild(playerDiv); // Placer le joueur dans le body, pas dans le maze
             }
 
             updatePlayerPosition(playerDiv); // Position initiale du joueur
@@ -120,7 +122,8 @@
         function updatePlayerPosition(playerDiv) {
             const playerOffsetX = playerPosition.x * 6; // Décalage de 6px (5px + 1px de bordure)
             const playerOffsetY = playerPosition.y * 6; // Décalage de 6px (5px + 1px de bordure)
-            playerDiv.style.transform = `translate(${playerOffsetX}px, ${playerOffsetY}px)`; // Déplacer le joueur avec une transition fluide
+            playerDiv.style.left = `${playerOffsetX}px`; // Déplacer le joueur
+            playerDiv.style.top = `${playerOffsetY}px`; // Déplacer le joueur
         }
 
         // Déplacer le joueur
@@ -162,6 +165,7 @@
 
 </body>
 </html>
+
 
 
 
