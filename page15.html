@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avril 2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffe6e6;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Très joli clavier ;)</h1>
+
+    <script>
+        // Écouteur d'événement pour détecter les touches pressées
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "'") { // Vérifie si la touche pressée est "'"
+                alert('R'); // Affiche une popup avec "R"
+            }
+        });
+    </script>
+</body>
+</html>
