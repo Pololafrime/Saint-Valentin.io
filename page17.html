@@ -38,6 +38,7 @@
         }
         .player {
             background-color: #ff5733;
+            transition: transform 0.1s ease; /* Transition pour un mouvement fluide */
         }
         .exit {
             background-color: #28a745;
@@ -95,28 +96,26 @@
                     cellDiv.classList.add('cell');
                     if (cell.type === 'wall') {
                         cellDiv.classList.add('wall');
-                    } else if (cell.type === 'player') {
-                        cellDiv.classList.add('player');
                     } else if (cell.type === 'exit') {
                         cellDiv.classList.add('exit');
                     }
                     mazeElement.appendChild(cellDiv);
                 });
             });
+
+            // Créer l'élément du joueur
+            const playerDiv = document.createElement('div');
+            playerDiv.classList.add('player');
+            mazeElement.appendChild(playerDiv);
+            updatePlayerPosition(); // Position initiale du joueur
         }
 
-        // Mettre à jour la position du joueur dans la grille
+        // Mettre à jour la position du joueur
         function updatePlayerPosition() {
-            maze.forEach(row => {
-                row.forEach(cell => {
-                    if (cell.x === playerPosition.x && cell.y === playerPosition.y) {
-                        cell.type = 'player'; // Met à jour la position du joueur
-                    } else if (cell.type === 'player') {
-                        cell.type = 'empty'; // Vide la cellule précédente du joueur
-                    }
-                });
-            });
-            renderMaze(); // Rendre de nouveau la grille avec la position mise à jour
+            const playerDiv = document.querySelector('.player');
+            const playerOffsetX = playerPosition.x * 6; // Décalage de 6px (5px + 1px de bordure)
+            const playerOffsetY = playerPosition.y * 6; // Décalage de 6px (5px + 1px de bordure)
+            playerDiv.style.transform = `translate(${playerOffsetX}px, ${playerOffsetY}px)`; // Déplacer le joueur avec une transition fluide
         }
 
         // Déplacer le joueur
@@ -158,6 +157,7 @@
 
 </body>
 </html>
+
 
 
 
