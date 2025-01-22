@@ -12,7 +12,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(5, 40px); /* Assurer que chaque ligne ait 5 colonnes */
+            grid-template-columns: repeat(5, 40px); /* 5 cases par ligne */
             gap: 10px;
             justify-content: center;
             margin: 20px auto;
@@ -80,6 +80,11 @@
             gameGrid.appendChild(row);
         }
 
+        // Effacer le contenu précédent du grid
+        function clearGrid() {
+            gameGrid.innerHTML = '';
+        }
+
         // Évaluer une tentative
         function evaluateGuess() {
             const tiles = document.querySelectorAll(".tile");
@@ -122,6 +127,7 @@
                 if (currentWordIndex < words.length) {
                     secretWord = words[currentWordIndex];
                     attempts = 0;
+                    clearGrid();
                     createTiles();
                     document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
                     document.getElementById("message").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
@@ -135,6 +141,7 @@
                 if (currentWordIndex < words.length) {
                     secretWord = words[currentWordIndex];
                     attempts = 0;
+                    clearGrid();
                     createTiles();
                     document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
                 } else {
@@ -153,6 +160,7 @@
     </script>
 </body>
 </html>
+
 
 
 
