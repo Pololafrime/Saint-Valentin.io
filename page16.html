@@ -136,12 +136,12 @@
                     clearGrid();
                     createTiles();
                     document.getElementById("instructions").textContent = `Le mot contient ${secretWord.length} lettres. Vous avez ${maxAttempts} tentatives.`;
-                    document.getElementById("message").textContent = `Bravo ! Vous avez trouvé le mot : ${secretWord}`;
+                    document.getElementById("message").textContent = `Bravo !`;
                 } else {
                     showFinalMessage("Félicitations ! Vous avez trouvé tous les mots !");
                 }
             } else if (attempts >= maxAttempts) {
-                document.getElementById("message").textContent = `Perdu ! Le mot était : ${secretWord}`;
+                document.getElementById("message").textContent = `Perdu !`;
                 currentWordIndex++;
                 if (currentWordIndex < words.length) {
                     secretWord = words[currentWordIndex];
