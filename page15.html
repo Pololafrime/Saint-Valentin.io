@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars 2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clique sur le bon pixel =)</h1>
+    <p>Cliquez sur le bon pixel pour révéler la lettre "R".</p>
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Dimensions du canvas
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+        // Emplacement du "bon pixel"
+        const targetPixel = { x: 150, y: 150 }; // Coordonnées du pixel cible
+
+        // Dessiner le canevas (optionnel)
+        function drawCanvas() {
+            ctx.fillStyle = '#e0e0e0'; // Couleur de fond
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+            // Optionnel : Ajout de repères pour tests (supprimez pour le vrai jeu)
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(targetPixel.x - 1, targetPixel.y - 1, 3, 3); // Marquer le bon pixel (debug)
+        }
+
+        // Gestion du clic sur le canevas
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            // Vérification si l'utilisateur a cliqué sur le bon pixel
+            if (
+                Math.abs(mouseX - targetPixel.x) <= 1 && // Tolérance de 1 pixel
+                Math.abs(mouseY - targetPixel.y) <= 1
+            ) {
+                alert('R');
+            }
+        });
+
+        // Initialisation
+        drawCanvas();
+    </script>
+</body>
+</html>
