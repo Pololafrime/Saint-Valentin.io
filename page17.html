@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labyrinthe Géant</title>
+    <style>
+        body {
+            background-color: #ffe6e6;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #maze {
+            display: grid;
+            grid-template-columns: repeat(40, 20px);
+            grid-template-rows: repeat(40, 20px);
+            gap: 1px;
+        }
+        .cell {
+            width: 20px;
+            height: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+        }
+        .wall {
+            background-color: #333;
+        }
+        .player {
+            background-color: #ff5733;
+        }
+        .exit {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="maze"></div>
+
+    <script>
+        const mazeSize = 40; // 40x40 grid (can be adjusted for larger or smaller mazes)
+        const mazeElement = document.getElementById('maze');
+        let playerPosition = { x: 1, y: 1 };
+        const exitPosition = { x: 38, y: 38 };
+
+        // Create the maze grid
+        function createMaze() {
+            let maze = [];
+            for (let y = 0; y < mazeSize; y++) {
+                let row = [];
+                for (let x = 0; x < mazeSize; x++) {
+                    row.push({ x, y, type: 'empty' });
+                }
+                maze.push(row);
+            }
+            
+            // Add walls (you can customize the pattern here)
+            for (let y = 0; y < mazeSize; y++) {
+                for (let x = 0; x < mazeSize; x++) {
+                    if (x % 2 === 0 && y % 2 === 0 && (x !== 1 || y !== 1) && (x !== 38 || y !== 38)) {
+                        maze[y][x].type = 'wall';
+                    }
+                }
+            }
+            
+            // Set the exit and player positions
+            maze[exitPosition.y][exitPosition.x].type = 'exit';
+            maze[playerPosition.y][playerPosition.x].type = 'player';
+            
+            return maze;
+        }
+
+        // Render the maze
+        function renderMaze() {
+            mazeElement.innerHTML = '';
+            const maze = createMaze();
+
+            maze.forEach(row => {
+                row.forEach(cell => {
+                    const cellDiv = document.createElement('div');
+                    cellDiv.classList.add('cell');
+                    if (cell.type === 'wall') {
+                        cellDiv.classList.add('wall');
+                    } else if (cell.type === 'player') {
+                        cellDiv.classList.add('player');
+                    } else if (cell.type === 'exit') {
+                        cellDiv.classList.add('exit');
+                    }
+                    mazeElement.appendChild(cellDiv);
+                });
+            });
+        }
+
+        // Move the player
+        function movePlayer(dx, dy) {
+            const newX = playerPosition.x + dx;
+            const newY = playerPosition.y + dy;
+
+            if (newX >= 0 && newY >= 0 && newX < mazeSize && newY < mazeSize) {
+                const maze = createMaze();
+                if (maze[newY][newX].type !== 'wall') {
+                    playerPosition = { x: newX, y: newY };
+                    renderMaze();
+                    
+                    if (playerPosition.x === exitPosition.x && playerPosition.y === exitPosition.y) {
+                        alert("4");
+                    }
+                }
+            }
+        }
+
+        // Handle keyboard inputs
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    movePlayer(0, -1);
+                    break;
+                case 'ArrowDown':
+                    movePlayer(0, 1);
+                    break;
+                case 'ArrowLeft':
+                    movePlayer(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    movePlayer(1, 0);
+                    break;
+            }
+        });
+
+        renderMaze(); // Initial rendering of the maze
+    </script>
+
+</body>
+</html>
