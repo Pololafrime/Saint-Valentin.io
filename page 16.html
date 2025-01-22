@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avril 2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        #counter {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cliquez sur le bouton 1000 fois!</h1>
+    <button id="clickButton">Cliquez moi!</button>
+    <p id="counter">Nombre de clics: 0</p>
+
+    <script>
+        let clickCount = 0;
+        const button = document.getElementById("clickButton");
+        const counterDisplay = document.getElementById("counter");
+
+        button.addEventListener("click", function() {
+            clickCount++;
+            counterDisplay.textContent = "Nombre de clics: " + clickCount;
+
+            if (clickCount === 1000) {
+                alert(R");
+            }
+        });
+    </script>
+</body>
+</html>
