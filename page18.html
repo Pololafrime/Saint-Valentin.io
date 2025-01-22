@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Débloquer Pop-up</title>
+    <title>Juin 2024</title>
     <style>
         body {
             background-color: #ffe6e6;
@@ -27,26 +27,26 @@
 <body>
 
     <textarea id="inputText" placeholder="Commencez à écrire ici..."></textarea>
-    <p id="message">Il vous reste <span id="remaining">1000</span> caractères à écrire.</p>
+    <p id="message">Il vous reste <span id="remaining">10000</span> caractères à écrire.</p>
 
     <script>
         const inputText = document.getElementById('inputText');
         const remainingText = document.getElementById('remaining');
         const message = document.getElementById('message');
 
-        // Vérifier la longueur du texte et afficher la pop-up si le nombre de caractères atteint 1000
+        // Vérifier la longueur du texte et afficher la pop-up si le nombre de caractères atteint 10000
         inputText.addEventListener('input', function () {
             const currentLength = inputText.value.length;
-            const remainingChars = 1000 - currentLength;
+            const remainingChars = 10000 - currentLength;
 
             // Mettre à jour le texte qui montre le nombre de caractères restants
             remainingText.textContent = remainingChars;
 
-            if (currentLength >= 1000) {
-                // Si le nombre de caractères atteint 1000, déclencher la pop-up
+            if (currentLength >= 10000) {
+                // Si le nombre de caractères atteint 10000, déclencher la pop-up
                 alert('f');
                 message.style.color = 'green';
-                message.textContent = 'Vous avez écrit 1000 caractères ! Pop-up débloquée.';
+                message.textContent = 'Vous avez écrit 1000O caractères ! Pop-up débloquée.';
             }
         });
     </script>
