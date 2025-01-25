@@ -26,6 +26,20 @@
             padding: 10px 20px;
             font-size: 16px;
         }
+        /* Style pour les carrés 3x3 */
+        td:nth-child(3), td:nth-child(6), td:nth-child(9) {
+            border-right: 3px solid black;
+        }
+        tr:nth-child(3), tr:nth-child(6), tr:nth-child(9) td {
+            border-bottom: 3px solid black;
+        }
+        /* Style pour les lignes et colonnes du carré 3x3 */
+        tr:nth-child(3), tr:nth-child(6), tr:nth-child(9) {
+            border-bottom: 3px solid black;
+        }
+        td:nth-child(3), td:nth-child(6), td:nth-child(9) {
+            border-right: 3px solid black;
+        }
     </style>
 </head>
 <body>
@@ -151,3 +165,4 @@
 
 </body>
 </html>
+
