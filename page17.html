@@ -91,21 +91,48 @@
         // Initialiser le labyrinthe
         let maze = createMaze();
 
-        // Afficher le labyrinthe
-        function renderMaze() {
-            mazeElement.innerHTML = ''; // Réinitialiser la grille avant de la remplir
-            maze.forEach(row => {
-                row.forEach(cell => {
-                    const cellDiv = document.createElement('div');
-                    cellDiv.classList.add('cell');
-                    if (cell.type === 'wall') {
-                        cellDiv.classList.add('wall');
-                    } else if (cell.type === 'exit') {
-                        cellDiv.classList.add('exit');
-                    }
-                    mazeElement.appendChild(cellDiv);
-                });
-            });
+       function createMaze() {
+    let maze = [];
+    for (let y = 0; y < mazeSize; y++) {
+        let row = [];
+        for (let x = 0; x < mazeSize; x++) {
+            row.push({ x, y, type: 'wall' }); // Commencer avec des murs
+        }
+        maze.push(row);
+    }
+
+    // Ajouter un chemin garanti
+    let currentPosition = { x: playerPosition.x, y: playerPosition.y };
+    maze[currentPosition.y][currentPosition.x].type = 'empty'; // Départ
+
+    while (currentPosition.x !== exitPosition.x || currentPosition.y !== exitPosition.y) {
+        const directionOptions = [];
+        if (currentPosition.x < exitPosition.x) directionOptions.push({ dx: 1, dy: 0 });
+        if (currentPosition.x > exitPosition.x) directionOptions.push({ dx: -1, dy: 0 });
+        if (currentPosition.y < exitPosition.y) directionOptions.push({ dx: 0, dy: 1 });
+        if (currentPosition.y > exitPosition.y) directionOptions.push({ dx: 0, dy: -1 });
+
+        const direction = directionOptions[Math.floor(Math.random() * directionOptions.length)];
+        currentPosition.x += direction.dx;
+        currentPosition.y += direction.dy;
+
+        maze[currentPosition.y][currentPosition.x].type = 'empty'; // Tracer le chemin
+    }
+
+    // Ajouter des murs aléatoires en laissant des espaces libres
+    for (let y = 0; y < mazeSize; y++) {
+        for (let x = 0; x < mazeSize; x++) {
+            if (maze[y][x].type === 'wall' && Math.random() > 0.4) {
+                maze[y][x].type = 'empty'; // Réduire la densité des murs
+            }
+        }
+    }
+
+    // S'assurer que la sortie est définie
+    maze[exitPosition.y][exitPosition.x].type = 'exit';
+    return maze;
+}
+
 
             // Créer ou mettre à jour l'élément du joueur
             let playerDiv = document.querySelector('.player');
