@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku - Le plus dur du monde</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .sudoku-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 40px);
+            grid-template-rows: repeat(9, 40px);
+            gap: 2px;
+            background-color: #000;
+            padding: 5px;
+            border: 2px solid #333;
+        }
+
+        .sudoku-cell {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            outline: none;
+        }
+
+        .sudoku-cell:nth-child(3n) {
+            border-right: 2px solid #333;
+        }
+
+        .sudoku-cell:nth-child(n+19):nth-child(-n+27),
+        .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+            border-bottom: 2px solid #333;
+        }
+
+        .sudoku-cell.read-only {
+            background-color: #ddd;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sudoku - Le plus dur du monde</h1>
+        <div class="sudoku-grid">
+            <!-- Exemple d'une ligne avec des chiffres prédéfinis -->
+            <input type="text" class="sudoku-cell read-only" value="8" readonly>
+            <input type="text" class="sudoku-cell">
+            <input type="text" class="sudoku-cell">
+            <input type="text" class="sudoku-cell">
+            <input type="text" class="sudoku-cell">
+            <input type="text" class="sudoku-cell">
+            <input type="text" class="sudoku-cell">
+            <input type="text" class="sudoku-cell">
+            <input type="text" class="sudoku-cell">
+            <!-- Remplissez la grille avec les chiffres prédéfinis et les cases vides -->
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour vérifier si toutes les cases sont remplies
+        function isSudokuFinished() {
+            const cells = document.querySelectorAll('.sudoku-cell');
+            for (let cell of cells) {
+                if (!cell.value) { // Si une case est vide
+                    return false;
+                }
+            }
+            return true; // Si toutes les cases sont remplies
+        }
+
+        // Fonction qui est appelée chaque fois qu'une modification est faite dans les cellules
+        function checkSudokuCompletion() {
+            if (isSudokuFinished()) {
+                alert("8"); // Affiche une pop-up avec "8"
+            }
+        }
+
+        // Ajouter un écouteur d'événement sur chaque cellule pour surveiller les changements
+        document.querySelectorAll('.sudoku-cell').forEach(cell => {
+            cell.addEventListener('input', checkSudokuCompletion);
+        });
+    </script>
+</body>
+</html>
+
