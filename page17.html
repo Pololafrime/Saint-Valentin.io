@@ -152,15 +152,19 @@
             switch (event.key) {
                 case 'ArrowUp':
                     movePlayer(0, -1);
+                    event.preventDefault();
                     break;
                 case 'ArrowDown':
                     movePlayer(0, 1);
+                    event.preventDefault();
                     break;
                 case 'ArrowLeft':
                     movePlayer(-1, 0);
+                    event.preventDefault();
                     break;
                 case 'ArrowRight':
                     movePlayer(1, 0);
+                    event.preventDefault();
                     break;
             }
         });
