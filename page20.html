@@ -3,104 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Août 2024</title>
+    <title>Sudoku interactif</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #ffe6e6;
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
         }
-
-        h1 {
+        td {
+            width: 50px;
+            height: 50px;
             text-align: center;
-            margin-bottom: 20px;
+            border: 1px solid black;
         }
-
-        .container {
+        input {
+            width: 100%;
+            height: 100%;
             text-align: center;
+            font-size: 20px;
         }
-
-        .sudoku-grid {
-            display: grid;
-            grid-template-columns: repeat(9, 40px);
-            grid-template-rows: repeat(9, 40px);
-            gap: 2px;
-            background-color: #000;
-            padding: 5px;
-            border: 2px solid #333;
-        }
-
-        .sudoku-cell {
-            width: 40px;
-            height: 40px;
-            text-align: center;
+        button {
+            margin: 20px;
+            padding: 10px 20px;
             font-size: 16px;
-            font-weight: bold;
-            border: none;
-            outline: none;
-        }
-
-        .sudoku-cell:nth-child(3n) {
-            border-right: 2px solid #333;
-        }
-
-        .sudoku-cell:nth-child(n+19):nth-child(-n+27),
-        .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
-            border-bottom: 2px solid #333;
-        }
-
-        .sudoku-cell.read-only {
-            background-color: #ddd;
-            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Sudoku - Le plus dur du monde</h1>
-        <div class="sudoku-grid">
-            <!-- Exemple d'une ligne avec des chiffres prédéfinis -->
-            <input type="text" class="sudoku-cell read-only" value="8" readonly>
-            <input type="text" class="sudoku-cell">
-            <input type="text" class="sudoku-cell">
-            <input type="text" class="sudoku-cell">
-            <input type="text" class="sudoku-cell">
-            <input type="text" class="sudoku-cell">
-            <input type="text" class="sudoku-cell">
-            <input type="text" class="sudoku-cell">
-            <input type="text" class="sudoku-cell">
-            <!-- Remplissez la grille avec les chiffres prédéfinis et les cases vides -->
-        </div>
-    </div>
+
+    <h1 style="text-align: center;">Sudoku interactif</h1>
+
+    <table id="sudoku-grid">
+        <!-- Grille de Sudoku -->
+        <!-- Les cases seront remplies via JavaScript -->
+    </table>
+
+    <button onclick="solveSudoku()">Résoudre le Sudoku</button>
 
     <script>
-        // Fonction pour vérifier si toutes les cases sont remplies
-        function isSudokuFinished() {
-            const cells = document.querySelectorAll('.sudoku-cell');
-            for (let cell of cells) {
-                if (!cell.value) { // Si une case est vide
+        // Exemple de grille Sudoku initiale
+        const initialGrid = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 0, 0, 3],
+            [4, 0, 0, 8, 0, 3, 0, 0, 1],
+            [7, 0, 0, 0, 2, 0, 0, 0, 6],
+            [0, 6, 0, 0, 0, 0, 2, 8, 0],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 7, 9]
+        ];
+
+        // Générer la grille HTML
+        const gridTable = document.getElementById('sudoku-grid');
+
+        function generateGrid(grid) {
+            gridTable.innerHTML = '';  // Vider la grille avant de la régénérer
+            for (let i = 0; i < 9; i++) {
+                const row = gridTable.insertRow();
+                for (let j = 0; j < 9; j++) {
+                    const cell = row.insertCell();
+                    if (grid[i][j] !== 0) {
+                        cell.textContent = grid[i][j];
+                    } else {
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.min = '1';
+                        input.max = '9';
+                        input.id = `cell-${i}-${j}`;
+                        cell.appendChild(input);
+                    }
+                }
+            }
+        }
+
+        // Vérifier si un nombre peut être placé à une position
+        function isValid(grid, row, col, num) {
+            for (let i = 0; i < 9; i++) {
+                if (grid[row][i] === num || grid[i][col] === num) {
                     return false;
                 }
             }
-            return true; // Si toutes les cases sont remplies
+
+            const startRow = Math.floor(row / 3) * 3;
+            const startCol = Math.floor(col / 3) * 3;
+            for (let i = startRow; i < startRow + 3; i++) {
+                for (let j = startCol; j < startCol + 3; j++) {
+                    if (grid[i][j] === num) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
-        // Fonction qui est appelée chaque fois qu'une modification est faite dans les cellules
-        function checkSudokuCompletion() {
-            if (isSudokuFinished()) {
-                alert("8"); // Affiche une pop-up avec "8"
+        // Résoudre le Sudoku avec un algorithme de backtracking
+        function solveSudoku(grid) {
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    if (grid[row][col] === 0) {
+                        for (let num = 1; num <= 9; num++) {
+                            if (isValid(grid, row, col, num)) {
+                                grid[row][col] = num;
+                                if (solveSudoku(grid)) {
+                                    return true;
+                                }
+                                grid[row][col] = 0;
+                            }
+                        }
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Mettre à jour la grille avec les résultats
+        function updateGrid(grid) {
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    const cell = document.getElementById(`cell-${i}-${j}`);
+                    if (cell) {
+                        cell.value = grid[i][j] !== 0 ? grid[i][j] : '';
+                    }
+                }
             }
         }
 
-        // Ajouter un écouteur d'événement sur chaque cellule pour surveiller les changements
-        document.querySelectorAll('.sudoku-cell').forEach(cell => {
-            cell.addEventListener('input', checkSudokuCompletion);
-        });
+        // Initialisation
+        generateGrid(initialGrid);
+
+        // Résoudre le Sudoku
+        function solve() {
+            const gridCopy = initialGrid.map(row => row.slice());
+            if (solveSudoku(gridCopy)) {
+                updateGrid(gridCopy);
+            } else {
+                alert("Pas de solution trouvée.");
+            }
+        }
+
+        // Lier le bouton pour résoudre
+        function solveSudoku() {
+            solve();
+        }
+
     </script>
+
 </body>
 </html>
-
